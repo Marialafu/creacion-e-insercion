@@ -12,7 +12,6 @@ const supplyHistoryList = document.getElementById('supply-history')
 
 const begoButton = document.getElementById('bego-button');
 const trafficZone = document.getElementById('traffic-zone');
-const trafficZoneMessage = document.getElementById('traffic-zone-message')
 
 
 const supplies = [
@@ -91,25 +90,51 @@ const generateSupplySearchList = () => {
 // "Bego, please be careful! This car model 🚗 is stalking you! 🚨" (La imagen del coche será el que se repite 3 veces)
 
 const cars = ['🚗', '🚕', '🚙'];
+let carList = []
 
+
+
+const generateAleatoryCar = () => {
+  const aleatoryCar = Math.floor(Math.random()*cars.length)
+  return aleatoryCar
+}
 
 const generateBegoGame = () => {
-  
-  const aleatoryCar = Math.floor(Math.random()*cars.length)
-  const carElement = document.createElement('span')
+  //genero un coche aleatorio, igual para toda la función
+  let car = generateAleatoryCar()
 
-  carElement.textContent = cars[aleatoryCar]
-  if (cars.length === 2){
-    const carefulMessage = document.createElement('p')
-    carefulMessage.classList.add('color')
-    carefulMessage.textContent = `Bego, please be careful! This car model ${cars[aleatoryCar]} is stalking you! 🚨`
-    trafficZoneMessage.append(carefulMessage)
-  } else {
-    carefulMessage.textContent = ''
-  }
-  //poner y quitar el coche
+  //creo span del coche
+  const carElement = document.createElement('span')
+  carElement.textContent = cars[car]
   trafficZone.append(carElement)
+
+  console.log(carElement.textContent);
+  
+  //añado el coche al listado para ver si son iguales
+  if (carList.length < 3 ){
+    carList.unshift(cars[car])
+  } else {
+    carList.pop()
+    carList.unshift(cars[car])
+  }
+  console.log(carList);
+
+  //comparo el listado
+  const carefulMessage = document.createElement('p')
+
+  if (carList[0] === carList[1] && carList[1] === carList[2]){
+    carefulMessage.classList.add('color')
+    carefulMessage.textContent = `Bego, please be careful! This car model ${cars[car]} is stalking you! 🚨`
+    carElement.append(carefulMessage)
+    
+  } else {
+    //quitar el cartel
+    carefulMessage.remove()
+    
+  }
+  
 }
+
 
 begoButton.addEventListener('click', generateBegoGame)
 findSuppliesButton.addEventListener('click', generateSupplySearchList)

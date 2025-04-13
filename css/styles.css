@@ -25,3 +25,6 @@ body {
 .color{
   color: red;
 }
+.hide{
+  display: none;
+}

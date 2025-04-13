@@ -121,18 +121,16 @@ const generateBegoGame = () => {
 
   //comparo el listado
   const carefulMessage = document.createElement('p')
+  carefulMessage.classList.add('color')
+  carefulMessage.textContent = `Bego, please be careful! This car model ${cars[car]} is stalking you! 🚨`
+  carefulMessage.classList.add('hide')
 
   if (carList[0] === carList[1] && carList[1] === carList[2]){
-    carefulMessage.classList.add('color')
-    carefulMessage.textContent = `Bego, please be careful! This car model ${cars[car]} is stalking you! 🚨`
-    carElement.append(carefulMessage)
-    
+    carefulMessage.classList.remove('hide')
   } else {
-    //quitar el cartel
     carefulMessage.remove()
-    
   }
-  
+  carElement.append(carefulMessage)
 }
 
 
